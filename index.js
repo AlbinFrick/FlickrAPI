@@ -1,5 +1,6 @@
 import express from 'express';
 import fetch from 'node-fetch';
+import cors from 'cors';
 import dotenv from 'dotenv'
 dotenv.config();
 
@@ -8,6 +9,7 @@ const app = express();
 const PORT = 8080;
 
 app.use(express.json())
+app.use(cors())
 
 app.listen(
 	PORT,
@@ -22,18 +24,24 @@ app.listen(
  * 
  * *params: req, res
  */
-app.get('/search-image/:tag/:amount/:size', async (req, res) => {
-	const { tag, amount, size } = req.params;
-	var url = `https://api.flickr.com/services/rest?method=flickr.photos.search&api_key=${process.env.FLICKR_API_KEY}&tags=${tag}&per_page=${amount}&page=1&format=json&nojsoncallback=1`
+app.get('/search-image/:tag/:amount/:page', async (req, res) => {
+	const { tag, amount, page } = req.params;
+	var url = `https://api.flickr.com/services/rest?method=flickr.photos.search&api_key=${process.env.FLICKR_API_KEY}&tags=${tag}&per_page=${amount}&page=${page}&format=json&nojsoncallback=1`
 	fetch(url)
 		.then((response) => {
 			return response.json()
 		})
 		.then((jsonRes) => {
-			let imgArray = jsonRes.photos.photo.map((img) => `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_${size}.jpg`)
+			let imgArray = jsonRes.photos.photo.map((img) => {
+				var imgURI = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}.jpg`
+				return {
+					title: img.title,
+					imgURI: imgURI
+				}
+			})
 			res.status(200).send(imgArray)
 		}).catch((error) => {
 			console.log(error)
-			res.status(400).send(error.json())
+			res.status(400).send(error)
 		})
 })
