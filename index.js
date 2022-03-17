@@ -33,7 +33,7 @@ app.get('/search-image/:tag/:amount/:page', async (req, res) => {
 		})
 		.then((jsonRes) => {
 			let imgArray = jsonRes.photos.photo.map((img) => {
-				var imgURI = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}.jpg`
+				var imgURI = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}`
 				return {
 					title: img.title,
 					imgURI: imgURI
