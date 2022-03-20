@@ -13,7 +13,7 @@ app.use(cors());
 app.listen(PORT, () => console.log(`it's alive on http://localhost:${PORT}`));
 
 /**
- * This endpoint will fetch imageURIs with the given tag (category),
+ * This endpoint will fetch imageURLs with the given tag (category),
  * how many images of the category, and what size the images should be.
  *
  * ? Sizes can be found here: https://www.flickr.com/services/api/misc.urls.html
@@ -29,10 +29,10 @@ app.get("/search-image/:tag/:amount/:page", async (req, res) => {
     })
     .then((jsonRes) => {
       let imgArray = jsonRes.photos.photo.map((img) => {
-        var imgURI = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}`;
+        var imgURL = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}`;
         return {
           title: img.title,
-          imgURI: imgURI,
+          imgURL: imgURL,
         };
       });
       if (imgArray.length == 0)
