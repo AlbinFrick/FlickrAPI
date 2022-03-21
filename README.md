@@ -1,5 +1,3 @@
-# REDME API
-
 # Flickr Gallery API
 Detta är ett API för att hämta och formattera informaiton från Flickrs API. 
 Här nedan finns information för hur man kör igång allting.
