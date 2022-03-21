@@ -14,9 +14,7 @@ app.listen(PORT, () => console.log(`it's alive on http://localhost:${PORT}`));
 
 /**
  * This endpoint will fetch imageURLs with the given tag (category),
- * how many images of the category, and what size the images should be.
- *
- * ? Sizes can be found here: https://www.flickr.com/services/api/misc.urls.html
+ *  and how many images of the category.
  *
  * *params: req, res
  */
